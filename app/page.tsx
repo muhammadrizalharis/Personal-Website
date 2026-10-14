@@ -2,6 +2,7 @@ import Certificates from "./components/Certificates";
 import Guestbook from "./components/Guestbook";
 import SiteInteractions from "./components/SiteInteractions";
 import { projects } from "./data/projects";
+import { publications, orcidUrl } from "./data/publications";
 
 const githubIcon = (
   <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.4-1.27.73-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.46.11-3.05 0 0 .98-.31 3.2 1.18a11 11 0 0 1 5.82 0c2.22-1.5 3.2-1.18 3.2-1.18.63 1.59.23 2.76.11 3.05.75.81 1.2 1.84 1.2 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z" /></svg>
@@ -25,6 +26,7 @@ export default function Home() {
             <a href="#about" className="nav__link">Tentang</a>
             <a href="#skills" className="nav__link">Keahlian</a>
             <a href="#projects" className="nav__link">Proyek</a>
+            <a href="#publications" className="nav__link">Publikasi</a>
             <a href="#journey" className="nav__link">Perjalanan</a>
             <a href="#certificates" className="nav__link">Sertifikat</a>
             <a href="#guestbook" className="nav__link">Buku Tamu</a>
@@ -265,11 +267,52 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Journey */}
-        <section className="section section--alt" id="journey">
+        {/* Publications */}
+        <section className="section section--alt" id="publications">
           <div className="container">
             <div className="section__head reveal">
-              <span className="section__tag">04 — Perjalanan</span>
+              <span className="section__tag">04 — Publikasi</span>
+              <h2 className="section__title">Riset &amp; publikasi ilmiah</h2>
+              <p className="section__lead">
+                Aktif di riset data &amp; machine learning. Daftar lengkap ada di{" "}
+                <a href={orcidUrl} target="_blank" rel="noopener noreferrer" className="link">
+                  ORCID saya ↗
+                </a>
+                .
+              </p>
+            </div>
+            <ol className="pubs">
+              {publications.map((p) => (
+                <li className="pub reveal" key={p.doi ?? p.url}>
+                  <div className="pub__top">
+                    <span className="pub__type">{p.type}</span>
+                    <span className="pub__year">{p.year}</span>
+                  </div>
+                  <h3 className="pub__title">
+                    <a href={p.url} target="_blank" rel="noopener noreferrer">
+                      {p.title}
+                    </a>
+                  </h3>
+                  <p className="pub__venue">{p.venue}</p>
+                  <div className="pub__meta">
+                    {p.role && <span className="pub__role">{p.role}</span>}
+                    {p.doi && (
+                      <a href={p.url} target="_blank" rel="noopener noreferrer" className="pub__doi">
+                        DOI: {p.doi}
+                      </a>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* Journey */}
+        <section className="section" id="journey">
+          <div className="container">
+            <div className="section__head reveal">
+              <span className="section__tag">05 — Perjalanan</span>
               <h2 className="section__title">Apa yang sedang saya kerjakan</h2>
             </div>
             <ol className="timeline">
@@ -302,10 +345,10 @@ export default function Home() {
         </section>
 
         {/* Certificates */}
-        <section className="section" id="certificates">
+        <section className="section section--alt" id="certificates">
           <div className="container">
             <div className="section__head reveal">
-              <span className="section__tag">05 — Sertifikat</span>
+              <span className="section__tag">06 — Sertifikat</span>
               <h2 className="section__title">Sertifikat &amp; penghargaan</h2>
               <p className="section__lead">Kumpulan sertifikasi dan pencapaian yang pernah saya raih.</p>
             </div>
@@ -317,7 +360,7 @@ export default function Home() {
         <section className="section" id="guestbook">
           <div className="container">
             <div className="section__head reveal">
-              <span className="section__tag">06 — Buku Tamu</span>
+              <span className="section__tag">07 — Buku Tamu</span>
               <h2 className="section__title">Tinggalkan jejak 📝</h2>
             </div>
             <div className="reveal">
@@ -330,7 +373,7 @@ export default function Home() {
         <section className="section section--alt" id="contact">
           <div className="container">
             <div className="contact reveal">
-              <span className="section__tag">07 — Kontak</span>
+              <span className="section__tag">08 — Kontak</span>
               <h2 className="contact__title">Mari berkolaborasi 🚀</h2>
               <p className="contact__desc">
                 Punya ide proyek, kebutuhan riset, atau sekadar ingin menyapa? Saya
