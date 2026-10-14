@@ -5,6 +5,14 @@ const nextConfig = {
   output: "standalone",
   reactStrictMode: true,
   poweredByHeader: false,
+  // Sertakan folder sertifikat ke dalam serverless function saat deploy ke
+  // Vercel. Tanpa ini, fs.readdirSync("public/certificates") gagal di runtime
+  // Vercel (folder public/ tidak ikut ke dalam lambda) sehingga galeri kosong.
+  experimental: {
+    outputFileTracingIncludes: {
+      "/": ["./public/certificates/**/*"],
+    },
+  },
 };
 
 export default nextConfig;
