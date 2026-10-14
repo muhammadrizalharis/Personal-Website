@@ -402,9 +402,27 @@ export default function Home() {
                 Punya ide proyek, kebutuhan riset, atau sekadar ingin menyapa?
                 Pintu saya selalu terbuka untuk percakapan yang baik.
               </p>
-              <a href="mailto:muhammadrizalharis03@gmail.com" className="btn btn--primary btn--lg contact__cta">
-                <span>Kirim Email</span>
-                <span aria-hidden="true">→</span>
+              <div className="contact__actions">
+                <a
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=muhammadrizalharis03@gmail.com&su=Halo%20Muhammad%20Rizal%20Haris"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn--primary btn--lg contact__cta"
+                >
+                  <span>Kirim Email</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+                <button
+                  type="button"
+                  className="btn btn--ghost btn--lg contact__copy"
+                  id="copyEmail"
+                  data-email="muhammadrizalharis03@gmail.com"
+                >
+                  <span className="contact__copy-label">Salin Email</span>
+                </button>
+              </div>
+              <a href="mailto:muhammadrizalharis03@gmail.com" className="contact__mailto">
+                atau pakai aplikasi email: muhammadrizalharis03@gmail.com
               </a>
               <div className="contact__socials">
                 <a href="https://github.com/muhammadrizalharis" target="_blank" rel="noopener noreferrer" className="contact__social">

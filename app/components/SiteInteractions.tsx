@@ -198,6 +198,47 @@ export default function SiteInteractions() {
       });
     }
 
+    // Copy email to clipboard (fallback kalau mailto tak terbuka)
+    const copyBtn = document.getElementById("copyEmail");
+    if (copyBtn) {
+      const label = copyBtn.querySelector(".contact__copy-label");
+      const email = copyBtn.getAttribute("data-email") || "";
+      const original = label?.textContent || "Salin Email";
+      let revertTimer: number | undefined;
+      const onCopy = async () => {
+        let ok = false;
+        try {
+          await navigator.clipboard.writeText(email);
+          ok = true;
+        } catch {
+          try {
+            const ta = document.createElement("textarea");
+            ta.value = email;
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            ok = document.execCommand("copy");
+            document.body.removeChild(ta);
+          } catch {
+            ok = false;
+          }
+        }
+        if (label) label.textContent = ok ? "Tersalin! ✓" : email;
+        copyBtn.classList.toggle("is-copied", ok);
+        if (revertTimer) window.clearTimeout(revertTimer);
+        revertTimer = window.setTimeout(() => {
+          if (label) label.textContent = original;
+          copyBtn.classList.remove("is-copied");
+        }, 2000);
+      };
+      copyBtn.addEventListener("click", onCopy);
+      cleanups.push(() => {
+        copyBtn.removeEventListener("click", onCopy);
+        if (revertTimer) window.clearTimeout(revertTimer);
+      });
+    }
+
     // Cursor spotlight (hero), magnetic buttons, scroll parallax — pointer devices only
     const finePointer = window.matchMedia("(pointer: fine)").matches;
     if (finePointer && !reduce) {
