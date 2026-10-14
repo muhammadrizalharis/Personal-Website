@@ -15,6 +15,7 @@ export default function Home() {
   return (
     <>
       <div className="scroll-progress" id="scrollProgress" aria-hidden="true" />
+      <div className="fx-grain" aria-hidden="true" />
       <AmbientFX />
 
       <header className="nav" id="nav">
@@ -63,6 +64,7 @@ export default function Home() {
           <div className="hero__bg" aria-hidden="true">
             <div className="blob blob--1" />
             <div className="blob blob--2" />
+            <div className="hero__spot" id="heroSpot" />
             <div className="grid-overlay" />
           </div>
           <div className="container hero__inner">
@@ -265,6 +267,27 @@ export default function Home() {
                 </ul>
                 <div className="skill-card__meter"><span style={{ ["--lvl" as string]: "84%" }} /></div>
               </article>
+            </div>
+            <div className="marquee reveal" aria-hidden="true">
+              <div className="marquee__track">
+                {[0, 1].map((dup) => (
+                  <div className="marquee__track-group" key={dup} style={{ display: "flex", gap: "14px" }}>
+                    <span className="marquee__item"><b>⚛</b> Next.js</span>
+                    <span className="marquee__item"><b>⬡</b> React</span>
+                    <span className="marquee__item"><b>TS</b> TypeScript</span>
+                    <span className="marquee__item"><b>🐘</b> PostgreSQL</span>
+                    <span className="marquee__item"><b>◆</b> Prisma</span>
+                    <span className="marquee__item"><b>🐳</b> Docker</span>
+                    <span className="marquee__item"><b>🐧</b> Linux</span>
+                    <span className="marquee__item"><b>🐍</b> Python</span>
+                    <span className="marquee__item"><b>🧠</b> scikit-learn</span>
+                    <span className="marquee__item"><b>⚡</b> Nginx</span>
+                    <span className="marquee__item"><b>◱</b> ComfyUI</span>
+                    <span className="marquee__item"><b>⚙</b> GPU Orchestration</span>
+                    <span className="marquee__item"><b>git</b> Git &amp; CI</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>

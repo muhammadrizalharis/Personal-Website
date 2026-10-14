@@ -198,6 +198,71 @@ export default function SiteInteractions() {
       });
     }
 
+    // Cursor spotlight (hero), magnetic buttons, scroll parallax — pointer devices only
+    const finePointer = window.matchMedia("(pointer: fine)").matches;
+    if (finePointer && !reduce) {
+      // Hero spotlight follows cursor via transform (compositor-only)
+      const hero = document.getElementById("home");
+      const spot = document.getElementById("heroSpot");
+      if (hero && spot) {
+        let rafId = 0;
+        let tx = 0, ty = 0;
+        const onMove = (e: MouseEvent) => {
+          const r = hero.getBoundingClientRect();
+          tx = e.clientX - r.left;
+          ty = e.clientY - r.top;
+          if (!rafId) {
+            rafId = window.requestAnimationFrame(() => {
+              spot.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
+              rafId = 0;
+            });
+          }
+        };
+        hero.addEventListener("mousemove", onMove);
+        cleanups.push(() => {
+          hero.removeEventListener("mousemove", onMove);
+          if (rafId) window.cancelAnimationFrame(rafId);
+        });
+      }
+
+      // Magnetic buttons
+      const magnets = Array.from(document.querySelectorAll<HTMLElement>(".btn--primary, .footer__top"));
+      magnets.forEach((el) => {
+        const onMove = (e: MouseEvent) => {
+          const r = el.getBoundingClientRect();
+          const mx = e.clientX - r.left - r.width / 2;
+          const my = e.clientY - r.top - r.height / 2;
+          el.style.transform = `translate(${mx * 0.25}px, ${my * 0.35}px)`;
+        };
+        const onLeave = () => { el.style.transform = ""; };
+        el.addEventListener("mousemove", onMove);
+        el.addEventListener("mouseleave", onLeave);
+        cleanups.push(() => {
+          el.removeEventListener("mousemove", onMove);
+          el.removeEventListener("mouseleave", onLeave);
+        });
+      });
+
+      // Subtle scroll parallax on hero background layer
+      const heroBg = document.querySelector<HTMLElement>(".hero__bg");
+      if (heroBg) {
+        let pRaf = 0;
+        const onParallax = () => {
+          if (pRaf) return;
+          pRaf = window.requestAnimationFrame(() => {
+            const y = window.scrollY || 0;
+            if (y < 1100) heroBg.style.transform = `translate3d(0, ${y * 0.18}px, 0)`;
+            pRaf = 0;
+          });
+        };
+        window.addEventListener("scroll", onParallax, { passive: true });
+        cleanups.push(() => {
+          window.removeEventListener("scroll", onParallax);
+          if (pRaf) window.cancelAnimationFrame(pRaf);
+        });
+      }
+    }
+
     return () => cleanups.forEach((fn) => fn());
   }, []);
 
