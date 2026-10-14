@@ -1,19 +1,21 @@
-import Certificates from "./components/Certificates";
+import { unstable_noStore as noStore } from "next/cache";
+import AmbientFX from "./components/AmbientFX";
+import Showcase from "./components/Showcase";
 import Guestbook from "./components/Guestbook";
 import SiteInteractions from "./components/SiteInteractions";
 import { projects } from "./data/projects";
 import { publications, orcidUrl } from "./data/publications";
-
-const githubIcon = (
-  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.4-1.27.73-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.46.11-3.05 0 0 .98-.31 3.2 1.18a11 11 0 0 1 5.82 0c2.22-1.5 3.2-1.18 3.2-1.18.63 1.59.23 2.76.11 3.05.75.81 1.2 1.84 1.2 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z" /></svg>
-);
+import { getCertificates } from "./lib/certificates";
 
 export default function Home() {
+  noStore();
   const year = new Date().getFullYear();
+  const certificates = getCertificates();
 
   return (
     <>
       <div className="scroll-progress" id="scrollProgress" aria-hidden="true" />
+      <AmbientFX />
 
       <header className="nav" id="nav">
         <div className="container nav__inner">
@@ -25,10 +27,8 @@ export default function Home() {
           <nav className="nav__links" id="navLinks" aria-label="Navigasi utama">
             <a href="#about" className="nav__link">Tentang</a>
             <a href="#skills" className="nav__link">Keahlian</a>
-            <a href="#projects" className="nav__link">Proyek</a>
-            <a href="#publications" className="nav__link">Publikasi</a>
+            <a href="#portfolio" className="nav__link">Portofolio</a>
             <a href="#journey" className="nav__link">Perjalanan</a>
-            <a href="#certificates" className="nav__link">Sertifikat</a>
             <a href="#guestbook" className="nav__link">Buku Tamu</a>
             <a href="#contact" className="nav__link">Kontak</a>
           </nav>
@@ -66,6 +66,7 @@ export default function Home() {
             <div className="grid-overlay" />
           </div>
           <div className="container hero__inner">
+            <div className="hero__content">
             <p className="hero__eyebrow reveal">👋 Halo, saya</p>
             <h1 className="hero__title reveal">
               Muhammad <span className="gradient-text">Rizal&nbsp;Haris</span>
@@ -80,7 +81,7 @@ export default function Home() {
               pada kode yang bersih, pengalaman pengguna yang baik, dan dampak nyata.
             </p>
             <div className="hero__cta reveal">
-              <a href="#projects" className="btn btn--primary">Lihat Proyek</a>
+              <a href="#portfolio" className="btn btn--primary">Lihat Proyek</a>
               <a href="#contact" className="btn btn--ghost">Hubungi Saya</a>
             </div>
             <div className="hero__socials reveal" aria-label="Tautan sosial">
@@ -99,6 +100,30 @@ export default function Home() {
               <a href="mailto:muhammadrizalharis03@gmail.com" className="social" aria-label="Email">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-10 6L2 7" /></svg>
               </a>
+            </div>
+            </div>
+            <div className="hero__visual reveal" data-delay="150">
+              <div className="portrait">
+                <span className="portrait__ring portrait__ring--a" aria-hidden="true" />
+                <span className="portrait__ring portrait__ring--b" aria-hidden="true" />
+                <span className="portrait__glow" aria-hidden="true" />
+                <img
+                  src="/pictures/rizal.png"
+                  alt="Muhammad Rizal Haris"
+                  className="portrait__img"
+                  width={387}
+                  height={975}
+                  loading="eager"
+                />
+                <img
+                  src="/logo/logo.png"
+                  alt="Logo Muhammad Rizal Haris"
+                  className="portrait__logo"
+                  width={640}
+                  height={633}
+                  loading="lazy"
+                />
+              </div>
             </div>
           </div>
           <a href="#about" className="hero__scroll" aria-label="Gulir ke bawah">
@@ -224,95 +249,31 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Projects */}
-        <section className="section" id="projects">
+        {/* Portfolio / Showcase */}
+        <section className="section" id="portfolio">
           <div className="container">
             <div className="section__head reveal">
-              <span className="section__tag">03 — Proyek</span>
-              <h2 className="section__title">Beberapa yang saya bangun</h2>
-            </div>
-            <div className="projects">
-              {projects.map((p) => (
-                <article className="project reveal" key={p.title}>
-                  <div className="project__top">
-                    <div className="project__icon">{p.icon}</div>
-                    {(p.repo || p.demo) && (
-                      <div className="project__links">
-                        {p.repo && (
-                          <a href={p.repo} target="_blank" rel="noopener noreferrer" aria-label="Kode" className="iconlink">
-                            {githubIcon}
-                          </a>
-                        )}
-                        {p.demo && (
-                          <a href={p.demo} target="_blank" rel="noopener noreferrer" aria-label="Demo" className="iconlink">
-                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 17 17 7M9 7h8v8" /></svg>
-                          </a>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                  <h3 className="project__title">
-                    {p.title}
-                    {p.draft && <span className="project__draft">draft</span>}
-                  </h3>
-                  <p className="project__desc">{p.desc}</p>
-                  <ul className="project__tags">
-                    {p.tags.map((t) => (
-                      <li key={t}>{t}</li>
-                    ))}
-                  </ul>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Publications */}
-        <section className="section section--alt" id="publications">
-          <div className="container">
-            <div className="section__head reveal">
-              <span className="section__tag">04 — Publikasi</span>
-              <h2 className="section__title">Riset &amp; publikasi ilmiah</h2>
+              <span className="section__tag">03 — Portofolio</span>
+              <h2 className="section__title">Karya, riset &amp; sertifikat</h2>
               <p className="section__lead">
-                Aktif di riset data &amp; machine learning. Daftar lengkap ada di{" "}
-                <a href={orcidUrl} target="_blank" rel="noopener noreferrer" className="link">
-                  ORCID saya ↗
-                </a>
-                .
+                Proyek yang saya bangun, publikasi ilmiah, dan sertifikat — semuanya
+                dalam satu tempat. Pilih tab untuk menjelajah.
               </p>
             </div>
-            <ol className="pubs">
-              {publications.map((p) => (
-                <li className="pub reveal" key={p.doi ?? p.url}>
-                  <div className="pub__top">
-                    <span className="pub__type">{p.type}</span>
-                    <span className="pub__year">{p.year}</span>
-                  </div>
-                  <h3 className="pub__title">
-                    <a href={p.url} target="_blank" rel="noopener noreferrer">
-                      {p.title}
-                    </a>
-                  </h3>
-                  <p className="pub__venue">{p.venue}</p>
-                  <div className="pub__meta">
-                    {p.role && <span className="pub__role">{p.role}</span>}
-                    {p.doi && (
-                      <a href={p.url} target="_blank" rel="noopener noreferrer" className="pub__doi">
-                        DOI: {p.doi}
-                      </a>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ol>
+            <Showcase
+              projects={projects}
+              publications={publications}
+              certificates={certificates}
+              orcidUrl={orcidUrl}
+            />
           </div>
         </section>
 
         {/* Journey */}
-        <section className="section" id="journey">
+        <section className="section section--alt" id="journey">
           <div className="container">
             <div className="section__head reveal">
-              <span className="section__tag">05 — Perjalanan</span>
+              <span className="section__tag">04 — Perjalanan</span>
               <h2 className="section__title">Apa yang sedang saya kerjakan</h2>
             </div>
             <ol className="timeline">
@@ -344,23 +305,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Certificates */}
-        <section className="section section--alt" id="certificates">
-          <div className="container">
-            <div className="section__head reveal">
-              <span className="section__tag">06 — Sertifikat</span>
-              <h2 className="section__title">Sertifikat &amp; penghargaan</h2>
-              <p className="section__lead">Kumpulan sertifikasi dan pencapaian yang pernah saya raih.</p>
-            </div>
-            <Certificates />
-          </div>
-        </section>
-
         {/* Guestbook */}
         <section className="section" id="guestbook">
           <div className="container">
             <div className="section__head reveal">
-              <span className="section__tag">07 — Buku Tamu</span>
+              <span className="section__tag">05 — Buku Tamu</span>
               <h2 className="section__title">Tinggalkan jejak 📝</h2>
             </div>
             <div className="reveal">
@@ -373,7 +322,7 @@ export default function Home() {
         <section className="section section--alt" id="contact">
           <div className="container">
             <div className="contact reveal">
-              <span className="section__tag">08 — Kontak</span>
+              <span className="section__tag">06 — Kontak</span>
               <h2 className="contact__title">Mari berkolaborasi 🚀</h2>
               <p className="contact__desc">
                 Punya ide proyek, kebutuhan riset, atau sekadar ingin menyapa? Saya

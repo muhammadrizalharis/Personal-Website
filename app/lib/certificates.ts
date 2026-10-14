@@ -1,7 +1,13 @@
 import fs from "node:fs";
 import path from "node:path";
-import { unstable_noStore as noStore } from "next/cache";
-import CertificateGallery, { type Certificate } from "./CertificateGallery";
+
+export type Certificate = {
+  title: string;
+  issuer?: string;
+  src: string;
+  preview: string;
+  kind: "image" | "pdf";
+};
 
 const IMAGE_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg", ".avif"]);
 const PDF_EXT = ".pdf";
@@ -39,7 +45,7 @@ function readLabels(): Record<string, LabelEntry> {
   }
 }
 
-function readCertificates(): Certificate[] {
+export function getCertificates(): Certificate[] {
   let entries: string[] = [];
   try {
     entries = fs.readdirSync(CERT_DIR);
@@ -69,22 +75,4 @@ function readCertificates(): Certificate[] {
   }
 
   return result.sort((a, b) => a.title.localeCompare(b.title, "id"));
-}
-
-export default function Certificates() {
-  noStore();
-  const certificates = readCertificates();
-
-  if (certificates.length === 0) {
-    return (
-      <div className="certs__empty reveal">
-        <p>Belum ada sertifikat yang ditambahkan.</p>
-        <p className="certs__hint">
-          Taruh file (gambar atau PDF) di folder <code>public/certificates/</code>, lalu muat ulang halaman.
-        </p>
-      </div>
-    );
-  }
-
-  return <CertificateGallery certificates={certificates} />;
 }
