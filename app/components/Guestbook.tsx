@@ -138,11 +138,16 @@ export default function Guestbook() {
         ) : (
           messages.map((m) => (
             <article className="msg" key={m.id}>
-              <div className="msg__head">
-                <span className="msg__name">{m.name}</span>
-                <span className="msg__time">{formatTime(m.createdAt)}</span>
+              <div className="msg__avatar" aria-hidden="true">
+                {m.name.trim().charAt(0).toUpperCase() || "?"}
               </div>
-              <p className="msg__body">{m.body}</p>
+              <div className="msg__main">
+                <div className="msg__head">
+                  <span className="msg__name">{m.name}</span>
+                  <span className="msg__time">{formatTime(m.createdAt)}</span>
+                </div>
+                <p className="msg__body">{m.body}</p>
+              </div>
             </article>
           ))
         )}

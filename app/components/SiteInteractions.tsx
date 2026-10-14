@@ -172,6 +172,32 @@ export default function SiteInteractions() {
       typed.textContent = PHRASES[0];
     }
 
+    // 3D tilt (skill cards & any [data-tilt])
+    const tiltEls = Array.from(document.querySelectorAll<HTMLElement>("[data-tilt]"));
+    if (!reduce) {
+      tiltEls.forEach((el) => {
+        const onMove = (e: MouseEvent) => {
+          const r = el.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width;
+          const py = (e.clientY - r.top) / r.height;
+          const rx = (0.5 - py) * 10;
+          const ry = (px - 0.5) * 12;
+          el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+          el.style.setProperty("--mx", px * 100 + "%");
+          el.style.setProperty("--my", py * 100 + "%");
+        };
+        const onLeave = () => {
+          el.style.transform = "";
+        };
+        el.addEventListener("mousemove", onMove);
+        el.addEventListener("mouseleave", onLeave);
+        cleanups.push(() => {
+          el.removeEventListener("mousemove", onMove);
+          el.removeEventListener("mouseleave", onLeave);
+        });
+      });
+    }
+
     return () => cleanups.forEach((fn) => fn());
   }, []);
 

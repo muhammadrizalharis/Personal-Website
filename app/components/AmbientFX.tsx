@@ -1,15 +1,27 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 // Efek latar ringan (hanya CSS transform/opacity, hemat GPU):
-//  - Mode malam: kilat petir acak + hujan rintik halus.
-//  - Mode siang: sinar matahari lembut + partikel debu melayang.
+//  - Mode malam: langit berbintang + bulan bercahaya, kilat petir acak, hujan rintik.
+//  - Mode siang: langit cerah lembut, matahari, awan melayang, partikel debu.
 // Semua dimatikan bila pengguna memilih "reduce motion".
 export default function AmbientFX() {
   const [isDark, setIsDark] = useState(true);
   const [flash, setFlash] = useState(0); // 0 none, 1 kiri, 2 kanan
   const timer = useRef<number | undefined>(undefined);
+
+  const stars = useMemo(
+    () =>
+      Array.from({ length: 48 }, () => ({
+        left: Math.random() * 100,
+        top: Math.random() * 68,
+        size: Math.random() * 1.8 + 1,
+        delay: Math.random() * 4,
+        dur: 2.6 + Math.random() * 3.4,
+      })),
+    [],
+  );
 
   useEffect(() => {
     const root = document.documentElement;
@@ -41,6 +53,27 @@ export default function AmbientFX() {
   if (isDark) {
     return (
       <div className="ambient ambient--night" aria-hidden="true">
+        <div className="ambient__stars">
+          {stars.map((s, i) => (
+            <span
+              key={i}
+              style={{
+                left: `${s.left}%`,
+                top: `${s.top}%`,
+                width: `${s.size}px`,
+                height: `${s.size}px`,
+                animationDelay: `${s.delay}s`,
+                animationDuration: `${s.dur}s`,
+              }}
+            />
+          ))}
+        </div>
+        <div className="ambient__shooting" />
+        <div className="ambient__moon">
+          <span className="ambient__moon-crater ambient__moon-crater--1" />
+          <span className="ambient__moon-crater ambient__moon-crater--2" />
+          <span className="ambient__moon-crater ambient__moon-crater--3" />
+        </div>
         <div className={`ambient__flash${flash ? " is-on" : ""}`} />
         <svg
           className={`ambient__bolt ambient__bolt--${flash}${flash ? " is-on" : ""}`}
@@ -68,6 +101,9 @@ export default function AmbientFX() {
     <div className="ambient ambient--day" aria-hidden="true">
       <div className="ambient__sun" />
       <div className="ambient__rays" />
+      <div className="ambient__cloud ambient__cloud--1" />
+      <div className="ambient__cloud ambient__cloud--2" />
+      <div className="ambient__cloud ambient__cloud--3" />
       <div className="ambient__dust" />
     </div>
   );

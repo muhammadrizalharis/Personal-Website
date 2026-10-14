@@ -161,7 +161,7 @@ function Coverflow({
           const abs = Math.abs(offset);
           const visible = abs <= 3;
           const style: React.CSSProperties = {
-            transform: `translateX(${offset * 42}%) translateZ(${-abs * 120}px) rotateY(${offset * -32}deg) scale(${offset === 0 ? 1 : 0.86})`,
+            transform: `translateX(${offset * 36}%) translateZ(${-abs * 140}px) rotateY(${offset * -30}deg) scale(${offset === 0 ? 1 : 0.82})`,
             opacity: visible ? 1 : 0,
             zIndex: 100 - abs,
             pointerEvents: visible ? "auto" : "none",

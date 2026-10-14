@@ -21,7 +21,7 @@ export default function Home() {
         <div className="container nav__inner">
           <a href="#home" className="nav__brand" aria-label="Beranda">
             <span className="nav__logo">MR</span>
-            <span className="nav__brand-text">Rizal&nbsp;Haris</span>
+            <span className="nav__brand-text">Muhammad&nbsp;Rizal&nbsp;Haris</span>
           </a>
 
           <nav className="nav__links" id="navLinks" aria-label="Navigasi utama">
@@ -108,11 +108,11 @@ export default function Home() {
                 <span className="portrait__ring portrait__ring--b" aria-hidden="true" />
                 <span className="portrait__glow" aria-hidden="true" />
                 <img
-                  src="/pictures/rizal.png"
+                  src="/pictures/rizal-hero.png"
                   alt="Muhammad Rizal Haris"
                   className="portrait__img"
-                  width={387}
-                  height={975}
+                  width={720}
+                  height={1761}
                   loading="eager"
                 />
                 <img
@@ -202,31 +202,46 @@ export default function Home() {
           <div className="container">
             <div className="section__head reveal">
               <span className="section__tag">02 — Keahlian</span>
-              <h2 className="section__title">Tools &amp; teknologi</h2>
+              <h2 className="section__title">Perangkat &amp; <span className="gradient-text">teknologi</span></h2>
+              <p className="section__lead">
+                Alat yang saya gunakan sehari-hari untuk membangun produk, meneliti,
+                dan mengirim gagasan menjadi sesuatu yang nyata.
+              </p>
             </div>
             <div className="skills">
-              <article className="skill-group reveal">
-                <h3 className="skill-group__title">Frontend</h3>
+              <article className="skill-card reveal tilt" data-tilt>
+                <div className="skill-card__sheen" aria-hidden="true" />
+                <div className="skill-card__icon">⚛️</div>
+                <h3 className="skill-card__title">Frontend</h3>
+                <p className="skill-card__sub">Antarmuka cepat &amp; aksesibel</p>
                 <ul className="chips">
                   <li className="chip">Next.js</li>
                   <li className="chip">React</li>
                   <li className="chip">TypeScript</li>
                   <li className="chip">Tailwind CSS</li>
-                  <li className="chip">HTML &amp; CSS</li>
+                  <li className="chip">Framer Motion</li>
                 </ul>
+                <div className="skill-card__meter"><span style={{ ["--lvl" as string]: "92%" }} /></div>
               </article>
-              <article className="skill-group reveal">
-                <h3 className="skill-group__title">Backend</h3>
+              <article className="skill-card reveal tilt" data-tilt>
+                <div className="skill-card__sheen" aria-hidden="true" />
+                <div className="skill-card__icon">🧩</div>
+                <h3 className="skill-card__title">Backend</h3>
+                <p className="skill-card__sub">API &amp; data yang kokoh</p>
                 <ul className="chips">
                   <li className="chip">Node.js</li>
                   <li className="chip">Prisma</li>
                   <li className="chip">PostgreSQL</li>
                   <li className="chip">REST API</li>
-                  <li className="chip">Auth</li>
+                  <li className="chip">Auth &amp; RBAC</li>
                 </ul>
+                <div className="skill-card__meter"><span style={{ ["--lvl" as string]: "86%" }} /></div>
               </article>
-              <article className="skill-group reveal">
-                <h3 className="skill-group__title">ML &amp; Data</h3>
+              <article className="skill-card reveal tilt" data-tilt>
+                <div className="skill-card__sheen" aria-hidden="true" />
+                <div className="skill-card__icon">🧠</div>
+                <h3 className="skill-card__title">ML &amp; Data</h3>
+                <p className="skill-card__sub">Riset &amp; model prediktif</p>
                 <ul className="chips">
                   <li className="chip">Python</li>
                   <li className="chip">scikit-learn</li>
@@ -234,16 +249,21 @@ export default function Home() {
                   <li className="chip">SVM</li>
                   <li className="chip">Jupyter</li>
                 </ul>
+                <div className="skill-card__meter"><span style={{ ["--lvl" as string]: "80%" }} /></div>
               </article>
-              <article className="skill-group reveal">
-                <h3 className="skill-group__title">Tools</h3>
+              <article className="skill-card reveal tilt" data-tilt>
+                <div className="skill-card__sheen" aria-hidden="true" />
+                <div className="skill-card__icon">⚙️</div>
+                <h3 className="skill-card__title">DevOps &amp; Infra</h3>
+                <p className="skill-card__sub">Kontainer, server, otomasi</p>
                 <ul className="chips">
-                  <li className="chip">Git</li>
                   <li className="chip">Docker</li>
                   <li className="chip">Linux</li>
-                  <li className="chip">Vercel</li>
-                  <li className="chip">VS Code</li>
+                  <li className="chip">Nginx</li>
+                  <li className="chip">Git &amp; CI</li>
+                  <li className="chip">GPU Orkestrasi</li>
                 </ul>
+                <div className="skill-card__meter"><span style={{ ["--lvl" as string]: "84%" }} /></div>
               </article>
             </div>
           </div>
@@ -281,24 +301,54 @@ export default function Home() {
                 <div className="timeline__dot" />
                 <div className="timeline__content">
                   <span className="timeline__time">Sekarang</span>
-                  <h3 className="timeline__title">Membangun produk SaaS riset</h3>
-                  <p>Mengembangkan Askara Scientific Solutions — menyatukan alur konsultasi, klien, dan admin dalam satu platform.</p>
+                  <h3 className="timeline__title">Askara Scientific Solutions</h3>
+                  <p>Membangun platform pendampingan naskah ilmiah — jurnal nasional &amp; internasional, skripsi/tesis, hingga artikel prosiding, dalam satu alur yang rapi.</p>
+                  <div className="timeline__tags"><span>SaaS</span><span>Next.js</span><span>Riset</span></div>
+                </div>
+              </li>
+              <li className="timeline__item reveal">
+                <div className="timeline__dot" />
+                <div className="timeline__content">
+                  <span className="timeline__time">Sekarang</span>
+                  <h3 className="timeline__title">CALYZR.AI — AI self-hosted</h3>
+                  <p>Menyatukan model cloud &amp; lokal (Ollama), workflow generatif (ComfyUI), agent eksekusi kode di sandbox, dan gateway kompatibel OpenAI dalam satu antarmuka.</p>
+                  <div className="timeline__tags"><span>LLM</span><span>RAG</span><span>Docker</span></div>
                 </div>
               </li>
               <li className="timeline__item reveal">
                 <div className="timeline__dot" />
                 <div className="timeline__content">
                   <span className="timeline__time">Baru-baru ini</span>
-                  <h3 className="timeline__title">Riset Machine Learning</h3>
-                  <p>Eksperimen klasifikasi dan evaluasi model (Random Forest, SVM) untuk kasus keamanan jaringan.</p>
+                  <h3 className="timeline__title">CodeUnical &amp; UNISMUH ComputeHub</h3>
+                  <p>Platform ujian pemrograman dengan sandbox terisolasi &amp; penilaian otomatis, serta orkestrasi job GPU kampus senyaman Colab namun aman untuk banyak pengguna.</p>
+                  <div className="timeline__tags"><span>Sandbox</span><span>GPU</span><span>Edu-tech</span></div>
+                </div>
+              </li>
+              <li className="timeline__item reveal">
+                <div className="timeline__dot" />
+                <div className="timeline__content">
+                  <span className="timeline__time">Baru-baru ini</span>
+                  <h3 className="timeline__title">AXON-RYZR — Generative AI on-premise</h3>
+                  <p>Platform text-to-image &amp; text-to-video yang berjalan penuh di GPU node lokal (ComfyUI), terkontainerisasi, dengan isolasi per-user untuk 50–500 pengguna.</p>
+                  <div className="timeline__tags"><span>Diffusion</span><span>On-premise</span><span>Queue</span></div>
                 </div>
               </li>
               <li className="timeline__item reveal">
                 <div className="timeline__dot" />
                 <div className="timeline__content">
                   <span className="timeline__time">Berkelanjutan</span>
+                  <h3 className="timeline__title">Riset &amp; publikasi ilmiah</h3>
+                  <p>Aktif di bidang riset jurnal — beberapa karya telah terbit dan terdaftar pada ORCID saya. Juga membangun UNICAL Associates Repo sebagai katalog publikasi kampus.</p>
+                  <div className="timeline__tags"><span>Machine Learning</span><span>ORCID</span><span>Publikasi</span></div>
+                </div>
+              </li>
+              <li className="timeline__item reveal">
+                <div className="timeline__dot" />
+                <div className="timeline__content">
+                  <span className="timeline__time">Selalu</span>
                   <h3 className="timeline__title">Belajar &amp; berbagi</h3>
-                  <p>Terus mengasah fundamental engineering, arsitektur sistem, dan praktik rekayasa perangkat lunak yang baik.</p>
+                  <p>Terus mengasah fundamental engineering, arsitektur sistem, dan praktik rekayasa perangkat lunak yang baik — satu commit setiap hari.</p>
+                  <div className="timeline__tags"><span>Arsitektur</span><span>Clean Code</span></div>
                 </div>
               </li>
             </ol>
@@ -322,20 +372,34 @@ export default function Home() {
         <section className="section section--alt" id="contact">
           <div className="container">
             <div className="contact reveal">
+              <div className="contact__glow" aria-hidden="true" />
               <span className="section__tag">06 — Kontak</span>
-              <h2 className="contact__title">Mari berkolaborasi 🚀</h2>
+              <h2 className="contact__title">Mari <span className="gradient-text">berkolaborasi</span></h2>
               <p className="contact__desc">
-                Punya ide proyek, kebutuhan riset, atau sekadar ingin menyapa? Saya
-                terbuka untuk ngobrol.
+                Punya ide proyek, kebutuhan riset, atau sekadar ingin menyapa?
+                Pintu saya selalu terbuka untuk percakapan yang baik.
               </p>
-              <a href="mailto:muhammadrizalharis03@gmail.com" className="btn btn--primary btn--lg">
-                Kirim Email
+              <a href="mailto:muhammadrizalharis03@gmail.com" className="btn btn--primary btn--lg contact__cta">
+                <span>Kirim Email</span>
+                <span aria-hidden="true">→</span>
               </a>
               <div className="contact__socials">
-                <a href="https://github.com/muhammadrizalharis" target="_blank" rel="noopener noreferrer" className="contact__social">GitHub ↗</a>
-                <a href="https://www.linkedin.com/in/muhammad-rizal-haris/" target="_blank" rel="noopener noreferrer" className="contact__social">LinkedIn ↗</a>
-                <a href="https://www.instagram.com/mhmmddrizal/" target="_blank" rel="noopener noreferrer" className="contact__social">Instagram ↗</a>
-                <a href="https://orcid.org/0009-0004-2748-8509" target="_blank" rel="noopener noreferrer" className="contact__social">ORCID ↗</a>
+                <a href="https://github.com/muhammadrizalharis" target="_blank" rel="noopener noreferrer" className="contact__social">
+                  <span className="contact__social-ic">⌘</span>
+                  <span className="contact__social-tx"><strong>GitHub</strong><em>@muhammadrizalharis</em></span>
+                </a>
+                <a href="https://www.linkedin.com/in/muhammad-rizal-haris/" target="_blank" rel="noopener noreferrer" className="contact__social">
+                  <span className="contact__social-ic">in</span>
+                  <span className="contact__social-tx"><strong>LinkedIn</strong><em>Muhammad Rizal Haris</em></span>
+                </a>
+                <a href="https://www.instagram.com/mhmmddrizal/" target="_blank" rel="noopener noreferrer" className="contact__social">
+                  <span className="contact__social-ic">◎</span>
+                  <span className="contact__social-tx"><strong>Instagram</strong><em>@mhmmddrizal</em></span>
+                </a>
+                <a href="https://orcid.org/0009-0004-2748-8509" target="_blank" rel="noopener noreferrer" className="contact__social">
+                  <span className="contact__social-ic">iD</span>
+                  <span className="contact__social-tx"><strong>ORCID</strong><em>0009-0004-2748-8509</em></span>
+                </a>
               </div>
             </div>
           </div>
@@ -344,7 +408,15 @@ export default function Home() {
 
       <footer className="footer">
         <div className="container footer__inner">
-          <p>© {year} Muhammad Rizal Haris. Dibuat dengan ❤️ &amp; sedikit kode.</p>
+          <div className="footer__brand">
+            <span className="nav__logo">MR</span>
+            <span>Muhammad Rizal Haris</span>
+          </div>
+          <p className="footer__poem">
+            Di antara baris kode dan larik riset,<br />
+            saya merangkai gagasan menjadi karya yang berarti.
+          </p>
+          <p className="footer__copy">© {year} — dirajut dengan ketekunan, bukan sekadar kode.</p>
           <a href="#home" className="footer__top" aria-label="Kembali ke atas">↑ Ke atas</a>
         </div>
       </footer>
