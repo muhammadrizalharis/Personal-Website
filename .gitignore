@@ -35,3 +35,6 @@ yarn-error.log*
 
 # prisma
 /prisma/*.db
+
+# ngrok (berisi authtoken - jangan commit)
+ngrok.yml
