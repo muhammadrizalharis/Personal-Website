@@ -85,10 +85,16 @@ export default function Home() {
               <a href="https://github.com/muhammadrizalharis" className="social" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.4-1.27.73-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.46.11-3.05 0 0 .98-.31 3.2 1.18a11 11 0 0 1 5.82 0c2.22-1.5 3.2-1.18 3.2-1.18.63 1.59.23 2.76.11 3.05.75.81 1.2 1.84 1.2 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z" /></svg>
               </a>
-              <a href="https://www.linkedin.com/" className="social" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/in/muhammad-rizal-haris/" className="social" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.74v20.52C0 23.22.8 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.74V1.74C24 .78 23.2 0 22.22 0z" /></svg>
               </a>
-              <a href="mailto:muhammadrizalharis@users.noreply.github.com" className="social" aria-label="Email">
+              <a href="https://www.instagram.com/mhmmddrizal/" className="social" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>
+              </a>
+              <a href="https://orcid.org/0009-0004-2748-8509" className="social" target="_blank" rel="noopener noreferrer" aria-label="ORCID">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zM7.37 18.19H5.63V7.72h1.74v10.47zM6.5 6.56a1.01 1.01 0 1 1 0-2.02 1.01 1.01 0 0 1 0 2.02zm11.69 11.63h-1.73v-5.11c0-1.22-.02-2.78-1.7-2.78-1.7 0-1.96 1.32-1.96 2.69v5.2H11.1V7.72h1.66v1.43h.02c.23-.44.8-1.32 2.22-1.32 2.37 0 2.81 1.25 2.81 3.44v6.92z" /></svg>
+              </a>
+              <a href="mailto:muhammadrizalharis03@gmail.com" className="social" aria-label="Email">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m22 7-10 6L2 7" /></svg>
               </a>
             </div>
@@ -330,12 +336,14 @@ export default function Home() {
                 Punya ide proyek, kebutuhan riset, atau sekadar ingin menyapa? Saya
                 terbuka untuk ngobrol.
               </p>
-              <a href="mailto:muhammadrizalharis@users.noreply.github.com" className="btn btn--primary btn--lg">
+              <a href="mailto:muhammadrizalharis03@gmail.com" className="btn btn--primary btn--lg">
                 Kirim Email
               </a>
               <div className="contact__socials">
                 <a href="https://github.com/muhammadrizalharis" target="_blank" rel="noopener noreferrer" className="contact__social">GitHub ↗</a>
-                <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className="contact__social">LinkedIn ↗</a>
+                <a href="https://www.linkedin.com/in/muhammad-rizal-haris/" target="_blank" rel="noopener noreferrer" className="contact__social">LinkedIn ↗</a>
+                <a href="https://www.instagram.com/mhmmddrizal/" target="_blank" rel="noopener noreferrer" className="contact__social">Instagram ↗</a>
+                <a href="https://orcid.org/0009-0004-2748-8509" target="_blank" rel="noopener noreferrer" className="contact__social">ORCID ↗</a>
               </div>
             </div>
           </div>
