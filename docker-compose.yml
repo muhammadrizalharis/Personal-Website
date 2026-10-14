@@ -1,0 +1,44 @@
+# Website Pribadi — stack lengkap dalam Docker (frontend + backend + database).
+# Jalankan:  docker compose up --build -d
+# Hentikan:  docker compose down   (tambah -v untuk menghapus data DB)
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: webpribadi-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-webpribadi}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    # Database TIDAK diekspos ke host secara default (service "web" mengaksesnya
+    # internal lewat host "db"). Untuk akses dari host (mis. Prisma Studio),
+    # set DB_PORT ke port bebas, contoh:  DB_PORT=55433 docker compose up -d
+    ports:
+      - "${DB_PORT:-127.0.0.1:0}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-webpribadi}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: webpribadi-web
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      # Di dalam jaringan compose, host database adalah "db".
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-webpribadi}?schema=public
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+
+volumes:
+  db_data:

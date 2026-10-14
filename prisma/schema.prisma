@@ -1,0 +1,22 @@
+// Prisma schema — database untuk Website Pribadi
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Pesan buku tamu (guestbook) yang dikirim pengunjung.
+model Message {
+  id        String   @id @default(cuid())
+  name      String   @db.VarChar(80)
+  body      String   @db.VarChar(500)
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("messages")
+}
