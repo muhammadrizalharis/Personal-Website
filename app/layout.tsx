@@ -15,6 +15,12 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ||
+      (process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "http://localhost:3000"),
+  ),
   title: "Muhammad Rizal Haris — Developer & Research Engineer",
   description:
     "Website pribadi Muhammad Rizal Haris — Full-Stack Developer & Machine Learning / Research Engineer. Membangun produk digital dan solusi riset.",
@@ -29,7 +35,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0d9488",
+  themeColor: "#e5a93c",
 };
 
 export default function RootLayout({

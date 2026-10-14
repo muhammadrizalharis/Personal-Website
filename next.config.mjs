@@ -5,12 +5,21 @@ const nextConfig = {
   output: "standalone",
   reactStrictMode: true,
   poweredByHeader: false,
-  // Sertakan folder sertifikat ke dalam serverless function saat deploy ke
-  // Vercel. Tanpa ini, fs.readdirSync("public/certificates") gagal di runtime
-  // Vercel (folder public/ tidak ikut ke dalam lambda) sehingga galeri kosong.
+  // Sertakan folder sertifikat (termasuk thumbnail .thumbs) ke dalam serverless
+  // function saat deploy ke Vercel. Tanpa ini, fs.readdir/readFile atas
+  // public/certificates gagal di runtime Vercel (folder public/ tidak ikut ke
+  // dalam lambda) sehingga galeri & thumbnail kosong. Folder .thumbs ditulis
+  // eksplisit karena glob default melewatkan direktori berawalan titik.
   experimental: {
     outputFileTracingIncludes: {
-      "/": ["./public/certificates/**/*"],
+      "/": [
+        "./public/certificates/**/*",
+        "./public/certificates/.thumbs/**/*",
+      ],
+      "/api/certificates/[file]": [
+        "./public/certificates/**/*",
+        "./public/certificates/.thumbs/**/*",
+      ],
     },
   },
 };
