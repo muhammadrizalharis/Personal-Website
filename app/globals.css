@@ -466,6 +466,20 @@ ul { list-style: none; }
 }
 .iconlink:hover { color: var(--primary-2); border-color: var(--primary); }
 .project__title { font-size: 1.22rem; margin-bottom: 10px; }
+.project__draft {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  color: #b7791f;
+  background: rgba(183, 121, 31, 0.14);
+  border: 1px solid rgba(183, 121, 31, 0.35);
+  border-radius: 999px;
+}
 .project__desc { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 18px; }
 .project__tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .project__tags li {
