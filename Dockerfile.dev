@@ -1,0 +1,33 @@
+# syntax=docker/dockerfile:1
+
+# ------------------------------------------------------------------
+# Website Pribadi — image untuk MODE DEV (hot-reload / Fast Refresh).
+# Dipakai lewat docker-compose.dev.yml. Source di-bind-mount dari host,
+# jadi setiap perubahan kode langsung ter-reload tanpa rebuild image.
+# ------------------------------------------------------------------
+
+FROM node:20-slim
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends openssl ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+
+# Install dependencies (postinstall menjalankan `prisma generate`).
+COPY package.json package-lock.json* ./
+COPY prisma ./prisma
+RUN npm ci
+
+COPY docker-entrypoint.sh ./docker-entrypoint.sh
+RUN chmod +x docker-entrypoint.sh
+
+ENV NODE_ENV=development
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+
+EXPOSE 3000
+
+# Entrypoint menyinkronkan skema DB (prisma db push) lalu menjalankan CMD.
+# Dipanggil via `sh` agar tak bergantung pada exec-bit file di bind-mount.
+ENTRYPOINT ["sh", "./docker-entrypoint.sh"]
+CMD ["npm", "run", "dev", "--", "-H", "0.0.0.0", "-p", "3000"]

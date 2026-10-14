@@ -1,0 +1,29 @@
+# ------------------------------------------------------------------
+# Override untuk MODE DEV dengan hot-reload (Fast Refresh).
+#
+# Jalankan:
+#   docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+#   (atau:  npm run docker:dev)
+#
+# Setiap perubahan file di host langsung ter-reload di web (port 3000),
+# tanpa perlu rebuild image. Database tetap jalan seperti biasa.
+# ------------------------------------------------------------------
+
+services:
+  web:
+    build:
+      dockerfile: Dockerfile.dev
+    environment:
+      NODE_ENV: development
+      # Pakai polling untuk file-watching agar hot-reload andal di dalam
+      # container (menghindari batas inotify host: "EMFILE too many open files").
+      WATCHPACK_POLLING: "true"
+      CHOKIDAR_USEPOLLING: "true"
+    command: ["npm", "run", "dev", "--", "-H", "0.0.0.0", "-p", "3000"]
+    volumes:
+      # Bind-mount seluruh project agar perubahan kode langsung terbaca.
+      - .:/app
+      # Volume khusus agar node_modules & .next milik container tidak
+      # tertimpa oleh isi host (menjaga prisma client & build cache dev).
+      - /app/node_modules
+      - /app/.next

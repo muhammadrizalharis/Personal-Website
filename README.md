@@ -192,13 +192,65 @@ Repo ini siap‑Vercel (`vercel.json`, `output: "standalone"` diabaikan Vercel).
 
 ---
 
-## 📦 Git & push ke GitHub
+## ⚡ Mode dev hot-reload di Docker (perubahan langsung muncul)
+
+Agar setiap perubahan kode **langsung tampil** di web tanpa `--build` manual,
+jalankan stack dalam mode pengembangan (Fast Refresh):
+
+```bash
+npm run docker:dev            # = docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+```
+
+- Web tetap di `http://localhost:3000` (dan lewat ngrok seperti biasa).
+- Edit file apa pun di `app/`, `lib/`, dll → halaman otomatis ter-reload.
+- File-watching memakai **polling** (`WATCHPACK_POLLING`) agar andal di dalam
+  container. Hentikan dengan `Ctrl+C` atau `npm run docker:dev:down`.
+
+Untuk kembali ke mode **produksi** (image standalone, lebih ringan/cepat):
+
+```bash
+npm run docker:dev:down
+npm run docker:up
+```
+
+---
+
+## 🔄 Auto-push ke GitHub (commit & push otomatis saat ada perubahan)
+
+`npm run sync` memantau perubahan file, lalu **commit + push otomatis** ke
+`origin/main`.
+
+**Satu kali saja — simpan kredensial** agar push jalan tanpa diminta password.
+Jalankan di terminal Anda sendiri (token tetap di tangan Anda, tidak masuk repo):
+
+```bash
+git config credential.helper store    # sudah diset di repo ini
+GIT_TERMINAL_PROMPT=1 GIT_ASKPASS= \
+  git -c credential.interactive=always push origin main
+# Username: muhammadrizalharis
+# Password: <Personal Access Token GitHub Anda>
+```
+
+Setelah token tersimpan (di `~/.git-credentials`), nyalakan watcher:
+
+```bash
+npm run sync                  # pantau & auto-commit + auto-push
+# atau atur interval / cabang:
+INTERVAL=5 BRANCH=main npm run sync
+```
+
+> Watcher menghormati `.gitignore`, jadi file rahasia (mis. `ngrok.yml`) tidak
+> ikut ter-commit. Tekan `Ctrl+C` untuk berhenti.
+
+---
+
+## 📦 Git & push ke GitHub (manual)
 
 Repo remote: `https://github.com/muhammadrizalharis/Personal-Website`
 
 ```bash
 git add -A
-git commit -m "feat: website pribadi full-stack (Next.js + Prisma + Postgres, Docker)"
+git commit -m "feat: ..."
 
 # Tempelkan token Anda sendiri saat diminta (JANGAN simpan di file):
 git push -u origin main
@@ -228,9 +280,14 @@ web-pribadi/
 ├─ lib/prisma.ts              # singleton Prisma Client
 ├─ prisma/schema.prisma       # model Message (database)
 ├─ public/certificates/       # taruh file sertifikat di sini
-├─ Dockerfile                 # build Next.js standalone
-├─ docker-compose.yml         # web + db
+├─ Dockerfile                 # build Next.js standalone (produksi)
+├─ Dockerfile.dev             # image mode dev (hot-reload)
+├─ docker-compose.yml         # web + db (produksi)
+├─ docker-compose.dev.yml     # override hot-reload (Fast Refresh)
 ├─ docker-entrypoint.sh       # sinkron skema saat start
+├─ scripts/
+│  ├─ auto-sync.sh            # auto commit + push saat ada perubahan
+│  └─ gen-cert-thumbs.sh      # buat thumbnail sertifikat
 ├─ vercel.json
 └─ .env.example
 ```
@@ -248,6 +305,10 @@ web-pribadi/
 | `npm run db:studio`| Buka Prisma Studio                    |
 | `npm run docker:up`| `docker compose up --build -d`        |
 | `npm run docker:down`| `docker compose down`               |
+| `npm run docker:dev`| Mode hot-reload di Docker (Fast Refresh) |
+| `npm run docker:dev:down`| Hentikan mode hot-reload         |
+| `npm run sync`     | Auto commit + push ke GitHub saat ada perubahan |
+| `npm run push`     | `git push origin main`                |
 
 ---
 
