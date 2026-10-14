@@ -1,3 +1,4 @@
+import Certificates from "./components/Certificates";
 import Guestbook from "./components/Guestbook";
 import SiteInteractions from "./components/SiteInteractions";
 
@@ -20,6 +21,7 @@ export default function Home() {
             <a href="#skills" className="nav__link">Keahlian</a>
             <a href="#projects" className="nav__link">Proyek</a>
             <a href="#journey" className="nav__link">Perjalanan</a>
+            <a href="#certificates" className="nav__link">Sertifikat</a>
             <a href="#guestbook" className="nav__link">Buku Tamu</a>
             <a href="#contact" className="nav__link">Kontak</a>
           </nav>
@@ -317,11 +319,23 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Certificates */}
+        <section className="section" id="certificates">
+          <div className="container">
+            <div className="section__head reveal">
+              <span className="section__tag">05 — Sertifikat</span>
+              <h2 className="section__title">Sertifikat &amp; penghargaan</h2>
+              <p className="section__lead">Kumpulan sertifikasi dan pencapaian yang pernah saya raih.</p>
+            </div>
+            <Certificates />
+          </div>
+        </section>
+
         {/* Guestbook */}
         <section className="section" id="guestbook">
           <div className="container">
             <div className="section__head reveal">
-              <span className="section__tag">05 — Buku Tamu</span>
+              <span className="section__tag">06 — Buku Tamu</span>
               <h2 className="section__title">Tinggalkan jejak 📝</h2>
             </div>
             <div className="reveal">
@@ -334,7 +348,7 @@ export default function Home() {
         <section className="section section--alt" id="contact">
           <div className="container">
             <div className="contact reveal">
-              <span className="section__tag">06 — Kontak</span>
+              <span className="section__tag">07 — Kontak</span>
               <h2 className="contact__title">Mari berkolaborasi 🚀</h2>
               <p className="contact__desc">
                 Punya ide proyek, kebutuhan riset, atau sekadar ingin menyapa? Saya

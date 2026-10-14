@@ -10,7 +10,9 @@ Fitur:
   responsif, dark/light mode, animasi reveal, efek ketik.
 - **Buku Tamu (Guestbook)** — pengunjung mengirim pesan yang disimpan ke PostgreSQL
   lewat REST API. Inilah yang memakai *backend* + *database*.
-- API: `GET/POST /api/messages`, `GET /api/health`.
+- **Sertifikat** — tampilkan sertifikat/penghargaan hanya dengan menaruh file (gambar
+  atau PDF) di folder `public/certificates/`. Lihat [bagian Sertifikat](#-sertifikat).
+- API: `GET/POST /api/messages`, `GET /api/health`, `GET /api/certificates/<file>`.
 
 ---
 
@@ -83,6 +85,38 @@ cp .env.example .env          # sesuaikan DATABASE_URL
 npm run db:push               # buat tabel
 npm run dev                   # http://localhost:3000
 ```
+
+---
+
+## 📜 Sertifikat
+
+Menambah sertifikat **tanpa menyentuh kode** — cukup taruh file di satu folder:
+
+```
+public/certificates/
+```
+
+- Format didukung: `.jpg .jpeg .png .webp .gif .svg .avif` dan `.pdf`.
+- **Nama file menjadi judul** yang tampil. Contoh: `AWS Cloud Practitioner 2024.pdf`
+  → ditampilkan sebagai "AWS Cloud Practitioner 2024".
+- Halaman web punya bagian **Sertifikat** yang otomatis menampilkan semua file di
+  folder tersebut (gambar sebagai thumbnail, PDF sebagai kartu). Klik untuk membuka.
+
+**Saat memakai Docker:** folder `public/certificates/` di-*mount* sebagai volume ke
+container, jadi begitu Anda menaruh file, cukup **refresh halaman** — tidak perlu
+rebuild maupun restart. File disajikan lewat route `GET /api/certificates/<file>`
+(membaca disk saat request).
+
+**Saat deploy ke Vercel:** Vercel tidak punya volume, jadi **commit** file sertifikat
+ke repo agar ikut ter-deploy:
+
+```bash
+git add public/certificates
+git commit -m "docs: tambah sertifikat"
+```
+
+> Catatan privasi: file di `public/certificates/` bersifat publik (bisa diakses
+> siapa pun yang punya URL-nya). Jangan taruh dokumen sensitif di sini.
 
 ---
 
@@ -167,9 +201,11 @@ Saat `git push`, isi **Username** dengan `muhammadrizalharis` dan **Password** d
 web-pribadi/
 ├─ app/
 │  ├─ api/
+│  │  ├─ certificates/[file]/route.ts # sajikan file sertifikat dari disk
 │  │  ├─ health/route.ts      # health check + status DB
 │  │  └─ messages/route.ts    # GET/POST guestbook (backend)
 │  ├─ components/
+│  │  ├─ Certificates.tsx     # baca folder public/certificates (server)
 │  │  ├─ Guestbook.tsx        # form + daftar pesan (client)
 │  │  └─ SiteInteractions.tsx # tema, scroll spy, animasi
 │  ├─ globals.css
@@ -177,6 +213,7 @@ web-pribadi/
 │  └─ page.tsx                # halaman utama
 ├─ lib/prisma.ts              # singleton Prisma Client
 ├─ prisma/schema.prisma       # model Message (database)
+├─ public/certificates/       # taruh file sertifikat di sini
 ├─ Dockerfile                 # build Next.js standalone
 ├─ docker-compose.yml         # web + db
 ├─ docker-entrypoint.sh       # sinkron skema saat start

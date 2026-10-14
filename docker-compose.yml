@@ -37,6 +37,10 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    volumes:
+      # Sertifikat: taruh file di ./public/certificates di host, langsung muncul
+      # di web tanpa rebuild image (read-only di dalam container).
+      - ./public/certificates:/app/public/certificates:ro
     ports:
       - "${WEB_PORT:-3000}:3000"
 
