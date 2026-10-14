@@ -44,5 +44,24 @@ services:
     ports:
       - "${WEB_PORT:-3000}:3000"
 
+  # Tunnel ngrok PERSISTEN agar situs selalu online di domain statis.
+  # restart: unless-stopped => otomatis hidup lagi setelah reboot / crash /
+  # terminal ditutup, jadi tidak perlu menjalankan ngrok manual lagi.
+  # Token dibaca dari variabel NGROK_AUTHTOKEN di ./.env (gitignored).
+  tunnel:
+    image: ngrok/ngrok:latest
+    container_name: webpribadi-tunnel
+    restart: unless-stopped
+    command:
+      - "http"
+      - "web:3000"
+      - "--domain=${NGROK_DOMAIN:-refreeze-rambling-eggshell.ngrok-free.dev}"
+      - "--log=stdout"
+      - "--log-format=logfmt"
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN:?NGROK_AUTHTOKEN belum di-set di .env}
+    depends_on:
+      - web
+
 volumes:
   db_data:
