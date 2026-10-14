@@ -97,10 +97,24 @@ public/certificates/
 ```
 
 - Format didukung: `.jpg .jpeg .png .webp .gif .svg .avif` dan `.pdf`.
-- **Nama file menjadi judul** yang tampil. Contoh: `AWS Cloud Practitioner 2024.pdf`
-  → ditampilkan sebagai "AWS Cloud Practitioner 2024".
-- Halaman web punya bagian **Sertifikat** yang otomatis menampilkan semua file di
-  folder tersebut (gambar sebagai thumbnail, PDF sebagai kartu). Klik untuk membuka.
+- **Judul otomatis** diambil dari nama file. Untuk judul yang rapi sesuai nama
+  sertifikat asli, isi `public/certificates/labels.json`:
+
+  ```json
+  {
+    "nama-file.pdf": { "title": "Judul Sertifikat", "issuer": "Penerbit" }
+  }
+  ```
+- **Preview PDF:** thumbnail halaman pertama dibuat dengan skrip. Setelah menaruh
+  PDF baru, jalankan:
+
+  ```bash
+  ./scripts/gen-cert-thumbs.sh      # butuh poppler-utils (pdftoppm)
+  ```
+
+  File gambar (`.png/.jpg/...`) tidak perlu thumbnail — langsung dipakai.
+- Di web, bagian **Sertifikat** menampilkan semua file sebagai kartu dengan preview.
+  **Klik kartu** untuk memperbesar (PDF tampil di viewer yang bisa di-zoom).
 
 **Saat memakai Docker:** folder `public/certificates/` di-*mount* sebagai volume ke
 container, jadi begitu Anda menaruh file, cukup **refresh halaman** — tidak perlu

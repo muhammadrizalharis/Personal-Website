@@ -1,46 +1,74 @@
 import fs from "node:fs";
 import path from "node:path";
 import { unstable_noStore as noStore } from "next/cache";
+import CertificateGallery, { type Certificate } from "./CertificateGallery";
 
 const IMAGE_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg", ".avif"]);
 const PDF_EXT = ".pdf";
+const CERT_DIR = path.join(process.cwd(), "public", "certificates");
 
-type Certificate = {
-  title: string;
-  href: string;
-  kind: "image" | "pdf";
-};
+type LabelEntry = { title?: string; issuer?: string };
 
-function toTitle(filename: string): string {
-  const base = filename.replace(/\.[^.]+$/, "");
-  const cleaned = base.replace(/[_-]+/g, " ").replace(/\s+/g, " ").trim();
-  return cleaned.replace(/\b\w/g, (c) => c.toUpperCase());
+function cleanTitle(filename: string): string {
+  let base = filename.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ");
+  base = base
+    .split(/\s+/)
+    .filter((tok) => {
+      if (/^\d{5,}$/.test(tok)) return false;
+      if (/^[0-9a-f]{6,}$/i.test(tok) && /\d/.test(tok)) return false;
+      return true;
+    })
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!base) base = filename.replace(/\.[^.]+$/, "");
+  return base.replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function readLabels(): Record<string, LabelEntry> {
+  try {
+    const raw = fs.readFileSync(path.join(CERT_DIR, "labels.json"), "utf8");
+    const parsed = JSON.parse(raw) as Record<string, string | LabelEntry>;
+    const out: Record<string, LabelEntry> = {};
+    for (const [key, val] of Object.entries(parsed)) {
+      out[key] = typeof val === "string" ? { title: val } : val;
+    }
+    return out;
+  } catch {
+    return {};
+  }
 }
 
 function readCertificates(): Certificate[] {
-  const dir = path.join(process.cwd(), "public", "certificates");
   let entries: string[] = [];
   try {
-    entries = fs.readdirSync(dir);
+    entries = fs.readdirSync(CERT_DIR);
   } catch {
     return [];
   }
 
-  return entries
-    .filter((name) => !name.startsWith("."))
-    .map((name) => {
-      const ext = path.extname(name).toLowerCase();
-      const href = `/api/certificates/${encodeURIComponent(name)}`;
-      if (ext === PDF_EXT) {
-        return { title: toTitle(name), href, kind: "pdf" as const };
-      }
-      if (IMAGE_EXT.has(ext)) {
-        return { title: toTitle(name), href, kind: "image" as const };
-      }
-      return null;
-    })
-    .filter((c): c is Certificate => c !== null)
-    .sort((a, b) => a.title.localeCompare(b.title, "id"));
+  const labels = readLabels();
+  const result: Certificate[] = [];
+
+  for (const name of entries) {
+    if (name.startsWith(".")) continue;
+    const ext = path.extname(name).toLowerCase();
+    const isPdf = ext === PDF_EXT;
+    const isImage = IMAGE_EXT.has(ext);
+    if (!isPdf && !isImage) continue;
+
+    const label = labels[name] ?? {};
+    const encoded = encodeURIComponent(name);
+    result.push({
+      title: label.title?.trim() || cleanTitle(name),
+      issuer: label.issuer?.trim() || undefined,
+      src: `/api/certificates/${encoded}`,
+      preview: isPdf ? `/api/certificates/${encoded}?thumb=1` : `/api/certificates/${encoded}`,
+      kind: isPdf ? "pdf" : "image",
+    });
+  }
+
+  return result.sort((a, b) => a.title.localeCompare(b.title, "id"));
 }
 
 export default function Certificates() {
@@ -58,33 +86,5 @@ export default function Certificates() {
     );
   }
 
-  return (
-    <div className="certs">
-      {certificates.map((cert) => (
-        <a
-          key={cert.href}
-          className="cert reveal"
-          href={cert.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          title={`Buka ${cert.title}`}
-        >
-          <div className="cert__media">
-            {cert.kind === "image" ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={cert.href} alt={cert.title} loading="lazy" />
-            ) : (
-              <div className="cert__pdf" aria-hidden="true">
-                <span className="cert__pdf-badge">PDF</span>
-              </div>
-            )}
-          </div>
-          <div className="cert__body">
-            <h3 className="cert__title">{cert.title}</h3>
-            <span className="cert__link">Lihat sertifikat →</span>
-          </div>
-        </a>
-      ))}
-    </div>
-  );
+  return <CertificateGallery certificates={certificates} />;
 }

@@ -16,11 +16,35 @@ const CONTENT_TYPES: Record<string, string> = {
   ".pdf": "application/pdf",
 };
 
-export async function GET(_req: NextRequest, { params }: { params: { file: string } }) {
-  const name = decodeURIComponent(params.file);
+const CERT_DIR = path.join(process.cwd(), "public", "certificates");
 
-  if (name.includes("/") || name.includes("\\") || name.includes("..") || name.startsWith(".")) {
+function isSafe(name: string): boolean {
+  return !(name.includes("/") || name.includes("\\") || name.includes("..") || name.startsWith("."));
+}
+
+export async function GET(req: NextRequest, { params }: { params: { file: string } }) {
+  const name = decodeURIComponent(params.file);
+  if (!isSafe(name)) {
     return new Response("Not found", { status: 404 });
+  }
+
+  const wantThumb = req.nextUrl.searchParams.get("thumb") === "1";
+
+  // Thumbnail: halaman pertama PDF yang sudah dirender ke PNG di .thumbs/.
+  if (wantThumb) {
+    const base = name.replace(/\.[^.]+$/, "");
+    const thumbPath = path.join(CERT_DIR, ".thumbs", `${base}.png`);
+    try {
+      const data = await fs.readFile(thumbPath);
+      return new Response(data as unknown as BodyInit, {
+        headers: {
+          "Content-Type": "image/png",
+          "Cache-Control": "public, max-age=300",
+        },
+      });
+    } catch {
+      return new Response("Not found", { status: 404 });
+    }
   }
 
   const ext = path.extname(name).toLowerCase();
@@ -29,7 +53,7 @@ export async function GET(_req: NextRequest, { params }: { params: { file: strin
     return new Response("Not found", { status: 404 });
   }
 
-  const filePath = path.join(process.cwd(), "public", "certificates", name);
+  const filePath = path.join(CERT_DIR, name);
   try {
     const data = await fs.readFile(filePath);
     return new Response(data as unknown as BodyInit, {
