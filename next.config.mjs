@@ -10,17 +10,15 @@ const nextConfig = {
   // public/certificates gagal di runtime Vercel (folder public/ tidak ikut ke
   // dalam lambda) sehingga galeri & thumbnail kosong. Folder .thumbs ditulis
   // eksplisit karena glob default melewatkan direktori berawalan titik.
-  experimental: {
-    outputFileTracingIncludes: {
-      "/": [
-        "./public/certificates/**/*",
-        "./public/certificates/.thumbs/**/*",
-      ],
-      "/api/certificates/[file]": [
-        "./public/certificates/**/*",
-        "./public/certificates/.thumbs/**/*",
-      ],
-    },
+  outputFileTracingIncludes: {
+    "/": [
+      "./public/certificates/**/*",
+      "./public/certificates/.thumbs/**/*",
+    ],
+    "/api/certificates/[file]": [
+      "./public/certificates/**/*",
+      "./public/certificates/.thumbs/**/*",
+    ],
   },
 };
 

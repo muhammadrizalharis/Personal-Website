@@ -22,8 +22,9 @@ function isSafe(name: string): boolean {
   return !(name.includes("/") || name.includes("\\") || name.includes("..") || name.startsWith("."));
 }
 
-export async function GET(req: NextRequest, { params }: { params: { file: string } }) {
-  const name = decodeURIComponent(params.file);
+export async function GET(req: NextRequest, { params }: { params: Promise<{ file: string }> }) {
+  const { file } = await params;
+  const name = decodeURIComponent(file);
   if (!isSafe(name)) {
     return new Response("Not found", { status: 404 });
   }

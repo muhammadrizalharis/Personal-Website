@@ -5,7 +5,7 @@
 # Debian slim base: OpenSSL tersedia, kompatibel dengan engine Prisma.
 # ------------------------------------------------------------------
 
-FROM node:20-slim AS base
+FROM node:22-slim AS base
 RUN apt-get update \
   && apt-get install -y --no-install-recommends openssl ca-certificates \
   && rm -rf /var/lib/apt/lists/*
