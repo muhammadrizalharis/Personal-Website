@@ -62,5 +62,37 @@
   "SERTIFIKAT_WORKSHOP_SCIENTIA_INNOVARE_2025.pdf": {
     "title": "Workshop Scientific Article Writing & Publishing",
     "issuer": "Scientia Innovare 2025 · FT Unismuh Makassar"
+  },
+  "Introduction to GitHub Copilot.pdf": {
+    "title": "Introduction to GitHub Copilot",
+    "issuer": "GitHub"
+  },
+  "Building applications with GitHub Copilot.pdf": {
+    "title": "Building Applications with GitHub Copilot Agent Mode",
+    "issuer": "GitHub"
+  },
+  "Accelerate development with Copilot in the cloud.pdf": {
+    "title": "Accelerate Development with Copilot in the Cloud",
+    "issuer": "GitHub"
+  },
+  "Responsible AI with GitHub Copilot.pdf": {
+    "title": "Responsible AI with GitHub Copilot",
+    "issuer": "GitHub"
+  },
+  "Foundations of Agentic AI in GitHub.pdf": {
+    "title": "Foundations of Agentic AI in GitHub",
+    "issuer": "GitHub"
+  },
+  "Developing in Agentic AI Systems Part 1 of 2.pdf": {
+    "title": "Developing in Agentic AI Systems (Part 1 of 2)",
+    "issuer": "GitHub"
+  },
+  "Designing Agent Architecture and SDLC integration.pdf": {
+    "title": "Designing Agent Architecture & SDLC Integration",
+    "issuer": "GitHub"
+  },
+  "Tooling, MCP, and Agent Execution.pdf": {
+    "title": "Tooling, MCP, and Agent Execution Environments",
+    "issuer": "GitHub"
   }
 }
